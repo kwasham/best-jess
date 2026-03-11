@@ -23,13 +23,13 @@ export async function POST(request: Request) {
     return new Response(`Ignored topic: ${topic}`, { status: 202 });
   }
 
-  const existingWebhook = await prisma.webhookReceipt.findUnique({
-    where: { webhookId }
-  });
+  // const existingWebhook = await prisma.webhookReceipt.findUnique({
+  //   where: { webhookId }
+  // });
 
-  if (existingWebhook?.status === 'processed') {
-    return Response.json({ ok: true, duplicateWebhook: true });
-  }
+  // if (existingWebhook?.status === 'processed') {
+  //   return Response.json({ ok: true, duplicateWebhook: true });
+  // }
 
   const order = JSON.parse(rawBody) as ShopifyOrder;
   const orderId = String(order.id);
@@ -55,27 +55,27 @@ export async function POST(request: Request) {
 
   try {
     const mapped = mapOrderToSheetRows(order, storeDisplayName);
-    const keys = mapped.map((row) =>
-      buildLineItemIdempotencyKey(shopDomain, row.idempotencyKeyParts.orderId, row.idempotencyKeyParts.lineItemId)
-    );
+    // const keys = mapped.map((row) =>
+    //   buildLineItemIdempotencyKey(shopDomain, row.idempotencyKeyParts.orderId, row.idempotencyKeyParts.lineItemId)
+    // );
 
-    const alreadyProcessed = await prisma.processedLineItem.findMany({
-      where: {
-        idempotencyKey: {
-          in: keys
-        }
-      },
-      select: {
-        idempotencyKey: true
-      }
-    });
+    // const alreadyProcessed = await prisma.processedLineItem.findMany({
+    //   where: {
+    //     idempotencyKey: {
+    //       in: keys
+    //     }
+    //   },
+    //   select: {
+    //     idempotencyKey: true
+    //   }
+    // });
 
-    const processedSet = new Set(alreadyProcessed.map((row) => row.idempotencyKey));
+    // const processedSet = new Set(alreadyProcessed.map((row) => row.idempotencyKey));
 
-    const pending = mapped.filter((row) => {
-      const key = buildLineItemIdempotencyKey(shopDomain, row.idempotencyKeyParts.orderId, row.idempotencyKeyParts.lineItemId);
-      return !processedSet.has(key);
-    });
+    // const pending = mapped.filter((row) => {
+    //   const key = buildLineItemIdempotencyKey(shopDomain, row.idempotencyKeyParts.orderId, row.idempotencyKeyParts.lineItemId);
+    //   return !processedSet.has(key);
+    // });
 
     if (pending.length === 0) {
       await prisma.webhookReceipt.update({
