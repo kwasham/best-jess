@@ -1,10 +1,10 @@
 # Shopify → Google Sheets starter (Next.js / Node)
 
-This starter receives a Shopify `orders/paid` webhook, expands the order into **one row per line item**, and appends those rows to a sandbox Google Sheet.
+This starter receives a Shopify `orders/create` webhook, expands the order into **one row per line item**, and appends those rows to a sandbox Google Sheet.
 
 ## What this starter does
 - Verifies the Shopify webhook HMAC.
-- Accepts only the configured topic (`orders/paid` by default).
+- Accepts only the configured topic (`orders/create` by default).
 - Maps each line item to one sheet row.
 - Uses **store name** as `Customer*`.
 - Uses the Shopify order number/name as `Memo` and `Sales Receipt No`.
@@ -12,7 +12,7 @@ This starter receives a Shopify `orders/paid` webhook, expands the order into **
 - Prevents duplicate writes with SQLite + Prisma idempotency keys.
 
 ## Folder structure
-- `app/api/shopify/webhooks/orders-paid/route.ts` — webhook endpoint
+- `app/api/shopify/webhooks/orders-create/route.ts` — webhook endpoint
 - `app/api/health/route.ts` — health check
 - `lib/mapping.ts` — row-per-line-item mapping
 - `lib/google-sheets.ts` — Sheets API append helpers
@@ -39,7 +39,7 @@ This starter receives a Shopify `orders/paid` webhook, expands the order into **
 5. Test health route:
    - `GET /api/health`
 6. Point your Shopify dev-store webhook to:
-   - `POST /api/shopify/webhooks/orders-paid`
+   - `POST /api/shopify/webhooks/orders-create`
 
 ## Expected Google Sheet columns
 The starter writes columns in this exact order:

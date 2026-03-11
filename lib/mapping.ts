@@ -50,7 +50,7 @@ function orderReceiptNumber(order: ShopifyOrder) {
 }
 
 function orderDate(order: ShopifyOrder) {
-  const raw = config.useOrderPaidDate ? (order.processed_at ?? order.created_at) : order.created_at;
+  const raw = config.useOrderCreateDate ? (order.processed_at ?? order.created_at) : order.created_at;
   if (!raw) return '';
   return new Date(raw).toISOString().slice(0, 10);
 }

@@ -12,7 +12,7 @@ Recommended test products:
 - Non-Texas shipping address order
 
 ## 2) Test payments
-Use Shopify's test ordering flow in the development store. Create multiple paid test orders so the `orders/paid` webhook fires.
+Use Shopify's test ordering flow in the development store. Create multiple create test orders so the `orders/create` webhook fires.
 
 ## 3) Sandbox Google Sheet
 Make a copy of your wife's batch template and name it something like:
@@ -36,7 +36,7 @@ Populate `.env.local` with:
 
 ## 6) Local tunnel
 Use a public HTTPS tunnel for local testing, such as ngrok or Cloudflare Tunnel, and point the Shopify webhook at:
-- `/api/shopify/webhooks/orders-paid`
+- `/api/shopify/webhooks/orders-create`
 
 ## 7) Test matrix
 Run these cases before touching production:

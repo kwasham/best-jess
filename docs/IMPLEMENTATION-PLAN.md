@@ -5,7 +5,7 @@
 - Create the sandbox Shopify dev store.
 - Create a sandbox copy of the Google Sheet.
 - Connect the webhook.
-- Validate that one paid order writes one row per line item.
+- Validate that one create order writes one row per line item.
 
 ## Phase 2 — harden for bookkeeping confidence
 - Confirm final sheet column order with your wife.
