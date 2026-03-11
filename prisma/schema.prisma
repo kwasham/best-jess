@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model WebhookReceipt {
+  id          String   @id @default(cuid())
+  webhookId   String   @unique
+  topic       String
+  shopDomain  String
+  orderId     String?
+  status      String   @default("received")
+  error       String?
+  receivedAt  DateTime @default(now())
+  processedAt DateTime?
+}
+
+model ProcessedLineItem {
+  id             String   @id @default(cuid())
+  idempotencyKey String   @unique
+  shopDomain     String
+  orderId        String
+  lineItemId     String
+  webhookId      String?
+  rowIndex       Int?
+  createdAt      DateTime @default(now())
+}
