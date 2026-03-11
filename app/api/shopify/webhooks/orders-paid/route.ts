@@ -55,6 +55,7 @@ export async function POST(request: Request) {
 
   try {
     const mapped = mapOrderToSheetRows(order, storeDisplayName);
+    const pending = mapped;
     // const keys = mapped.map((row) =>
     //   buildLineItemIdempotencyKey(shopDomain, row.idempotencyKeyParts.orderId, row.idempotencyKeyParts.lineItemId)
     // );
